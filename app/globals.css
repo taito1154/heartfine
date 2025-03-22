@@ -5,6 +5,13 @@
   --foreground: #171717;
 }
 
+.page-transition {
+  opacity: 0;
+  background: black;
+  /* transform: translateY(40px); */
+  filter: blur(12px);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
