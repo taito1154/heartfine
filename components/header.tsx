@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, view } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { TransitionLink } from "@/components/transitionlink";
+import Image from "next/image";
+import Button from "./button";
 
 export default function Navbar({
   className,
@@ -23,86 +25,106 @@ export default function Navbar({
   };
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 ${className || ""}`}>
-      <div className="w-full flex items-center justify-between p-5 h-20">
-        {/* 左側：ロゴ */}
-        <Link
-          href="/"
-          className={`title-font text-xl sm:text-2xl md:text-3xl font-bold text-white hover:text-gray-400 transition-colors ${
-            logoClassName || ""
-          }`}
-        >
-          Shungo Hirata
-        </Link>
-
-        {/* PC用ナビゲーションメニュー */}
-        <nav className="hidden md:flex gap-10 text-lg">
-          {[
-            { text: "About", href: "/about" },
-            { text: "Works", href: "/works" },
-            { text: "Contact", href: "/contact" },
-          ].map(({ text, href }) => (
-            <motion.div
-              key={text}
-              initial="initial"
-              whileHover="hover"
-              // motion.div に onClick でハンドリングする場合、ラップ内の Link にクリック処理が伝播するよう注意
-              className="cursor-pointer"
+    <header>
+      <div className="fixed top-0 left-0 w-full z-50">
+        <div className="w-full flex items-center justify-between p-10 h-20">
+          {!isOpen && (
+            <button
+              className="text-3xl text-black focus:outline-none"
+              onClick={() => setIsOpen(true)}
             >
-              <TransitionLink href={href}>
-                {/* TransitionLink 内のテキストは span などでラップしておく */}
-                <span className="title-font md:text-2xl lg:text-3xl transition-colors">
-                  {text}
-                </span>
-              </TransitionLink>
-            </motion.div>
-          ))}
-        </nav>
-
-        {/* スマホ用ナビゲーションメニュー */}
-        {!isOpen && (
-          <button
-            className="text-3xl text-white focus:outline-none md:hidden"
-            onClick={() => setIsOpen(true)}
-          >
-            ☰
-          </button>
-        )}
+              Menu☰
+            </button>
+          )}
+          <a href="https://beauty.hotpepper.jp/kr/slnH000295692/">
+            <Button />
+          </a>
+        </div>
       </div>
 
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black bg-opacity-50 flex flex-col  z-50 "
+          className="absolute inset-0 h-screen bg-black bg-opacity-50 flex flex-col  z-50 w-screen lg:w-[40vw] "
         >
           {/* 閉じるボタン */}
           <button
-            className=" title-font absolute top-5 right-5 text-3xl text-white"
+            className=" title-font absolute top-5 text-xl sm:text-3xl md:text-5xl text-white"
             onClick={() => setIsOpen(false)}
           >
             close
           </button>
-          <nav className="title-font flex flex-col text-white  space-y-8 text-3xl mt-20">
-            <button
-              className="px-5 py-3 text-left hover:bg-gray-600 transition-colors"
-              onClick={handleHomeClick}
-            >
-              Home
-            </button>
-            {["About", "Works", "Contact"].map((text) => (
-              <TransitionLink
-                key={text}
-                href={`/${text.toLowerCase()}`}
-                className="px-5 py-3 hover:bg-gray-600 transition-colors text-left"
-                // onClick={() => setIsOpen(false)}
-              >
-                {text}
-              </TransitionLink>
-            ))}
-          </nav>
+          <div className="flex-1 flex flex-col w-full pl-[8vw] pr-[8vw] pt-[9vh] overflow-y-auto min-h-0">
+            <div className="flex justify-center">
+              <Image
+                src="/photos/HeartFineLogo.png" // 画像のパスを指定
+                alt="Photo1"
+                width={100}
+                height={100}
+                className="
+                          logo
+                        "
+              />
+            </div>
+
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                当院について
+              </p>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                当院について
+              </p>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                当院について
+              </p>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                当院について
+              </p>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                料金プラン
+              </p>
+            </div>
+            <div className=" border-b border-white pb-5 mt-8">
+              <div className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                インディバ
+              </div>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                キャビマックス
+              </p>
+            </div>
+            <div className="border-b border-white pb-5 mt-8">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+                よもぎ蒸し
+              </p>
+            </div>
+            <div className="flex justify-center mt-8">
+              <a href="https://beauty.hotpepper.jp/kr/slnH000295692/">
+                <button className="bg-slate-700  text-white px-[30vw] lg:px-[12vw] py-[4vh] rounded-md">
+                  <h1>ご予約</h1>
+                </button>
+              </a>
+            </div>
+            <div className="flex justify-center mt-8">
+              <a href="tel:+819065585560">
+                <button className="bg-slate-700  text-white px-[30vw] lg:px-[12vw] py-[4vh] rounded-md">
+                  <h1>お電話</h1>
+                </button>
+              </a>
+            </div>
+          </div>
         </motion.div>
       )}
     </header>
