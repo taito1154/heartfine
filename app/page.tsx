@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { TransitionLink } from "@/components/transitionlink";
 import Image from "next/image";
 import Layout from "@/components/commonlayout";
+import Background from "@/components/background";
 
 export default function Home() {
   const [showTransition, setShowTransition] = useState(true);
@@ -18,8 +19,11 @@ export default function Home() {
   }, []);
   return (
     <Layout>
+      <div className="fixed inset-0 z-[-1]">
+        <Background />
+      </div>
       <>
-        {/* タイプライター風トランジション */}
+        {/* 入りのトランジション*/}
         {showTransition && (
           <div className="logotransition bg-black  w-screen h-screen">
             <Image
@@ -58,8 +62,19 @@ export default function Home() {
           </div>
         )}
 
-        <div className="flex items-center justify-center min-h-screen bg-white">
-          <h1 className="text-6xl font-bold">Heart Fine</h1>
+        <div className="overflow-auto">
+          <div className="flex items-center justify-center min-h-screen bg-transparent">
+            <h1 className="text-6xl font-bold">Heart Fine</h1>
+          </div>
+          <div className="flex items-center justify-center min-h-screen bg-transparent">
+            <h1 className="text-6xl font-bold">Heart Fine</h1>
+          </div>
+          <div className="flex items-center justify-center min-h-screen bg-transparent">
+            <h1 className="text-6xl font-bold">Heart Fine</h1>
+          </div>
+          <div className="flex items-center justify-center min-h-screen bg-transparent">
+            <h1 className="text-6xl font-bold">Heart Fine</h1>
+          </div>
         </div>
       </>
     </Layout>

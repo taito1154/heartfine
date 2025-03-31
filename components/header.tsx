@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence, view } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { TransitionLink } from "@/components/transitionlink";
 import Image from "next/image";
 import Button from "./button";
+import { useState, useEffect } from "react";
 
 export default function Navbar({
   className,
@@ -18,6 +18,20 @@ export default function Navbar({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter(); // ルーターを取得
   const pathname = usePathname();
+
+  // メニューの開閉に合わせて body のスクロールを無効化
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // クリーンアップ: コンポーネントがアンマウントされる時も解除
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleHomeClick = () => {
     router.push("/"); // ルートの `page.tsx` に遷移
@@ -48,7 +62,7 @@ export default function Navbar({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 h-screen bg-black bg-opacity-50 flex flex-col  z-50 w-screen lg:w-[40vw] "
+          className="fixed inset-0 h-screen bg-black bg-opacity-50 flex flex-col  z-50 w-screen lg:w-[40vw] "
         >
           {/* 閉じるボタン */}
           <button
@@ -57,7 +71,12 @@ export default function Navbar({
           >
             close
           </button>
-          <div className="flex-1 flex flex-col w-full pl-[8vw] pr-[8vw] pt-[9vh] overflow-y-auto min-h-0">
+          <div
+            style={{ overscrollBehavior: "contain" }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            className="flex flex-col w-full pl-[8vw] pr-[8vw] pt-[9vh] overflow-y-auto"
+          >
             <div className="flex justify-center">
               <Image
                 src="/photos/HeartFineLogo.png" // 画像のパスを指定
@@ -69,57 +88,41 @@ export default function Navbar({
                         "
               />
             </div>
-
             <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center text-white">
                 当院について
               </p>
             </div>
             <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
-                当院について
-              </p>
-            </div>
-            <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
-                当院について
-              </p>
-            </div>
-            <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
-                当院について
-              </p>
-            </div>
-            <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center text-white">
                 料金プラン
               </p>
             </div>
             <div className=" border-b border-white pb-5 mt-8">
-              <div className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+              <div className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center text-white">
                 インディバ
               </div>
             </div>
             <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center text-white">
                 キャビマックス
               </p>
             </div>
             <div className="border-b border-white pb-5 mt-8">
-              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center">
+              <p className="flex font-bold text-xl sm:text-3xl md:text-5xl justify-center text-white">
                 よもぎ蒸し
               </p>
             </div>
             <div className="flex justify-center mt-8">
               <a href="https://beauty.hotpepper.jp/kr/slnH000295692/">
-                <button className="bg-slate-700  text-white px-[30vw] lg:px-[12vw] py-[4vh] rounded-md">
+                <button className="bg-slate-700  text-white px-[30vw] lg:px-[7vw] py-[4vh] rounded-md text-xl sm:text-3xl md:text-5xl">
                   <h1>ご予約</h1>
                 </button>
               </a>
             </div>
             <div className="flex justify-center mt-8">
               <a href="tel:+819065585560">
-                <button className="bg-slate-700  text-white px-[30vw] lg:px-[12vw] py-[4vh] rounded-md">
+                <button className="bg-slate-700  text-white px-[30vw] lg:px-[7vw] py-[4vh] rounded-md text-xl sm:text-3xl md:text-5xl">
                   <h1>お電話</h1>
                 </button>
               </a>

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import "@/app/globals.css";
 import Lenis from "lenis";
 
 // プラグインを登録
@@ -46,9 +45,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     });
     ScrollTrigger.refresh();
 
+    // タブの表示状態の変化を検知して、Lenis を停止／再開する処理
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // タブが非表示になったら Lenis を停止
+        lenis.stop();
+      } else {
+        // タブが再表示されたら Lenis を再開
+        lenis.start();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       cancelAnimationFrame(rafId);
-      // ここでは lenis.update() を呼ばない
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
