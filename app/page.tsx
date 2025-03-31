@@ -6,6 +6,11 @@ import { TransitionLink } from "@/components/transitionlink";
 import Image from "next/image";
 import Layout from "@/components/commonlayout";
 import Background from "@/components/background";
+import Fadeshow from "@/components/fadeshow";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import { gsap } from "gsap";
 
 export default function Home() {
   const [showTransition, setShowTransition] = useState(true);
@@ -61,6 +66,8 @@ export default function Home() {
           `}</style>
           </div>
         )}
+
+        <Fadeshow />
 
         <div className="overflow-auto">
           <div className="flex items-center justify-center min-h-screen bg-transparent">
